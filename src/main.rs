@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    // initialize tracing
     tracing_subscriber::fmt::init();
 
     // build our application with a route
