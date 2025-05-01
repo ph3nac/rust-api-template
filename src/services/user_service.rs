@@ -23,30 +23,29 @@ impl UserService {
 
 #[cfg(test)]
 mod tests {
+    use crate::db::user_repo::MockUserRepo;
+
     use super::*;
-    use async_trait::async_trait;
     use uuid::Uuid;
 
-    struct DummyRepo;
-    #[async_trait]
-    impl UserRepo for DummyRepo {
-        async fn create(&self, name: String) -> anyhow::Result<User> {
+    #[tokio::test]
+    async fn service_register_and_get() {
+        let mut mock_user_repo = MockUserRepo::new();
+        mock_user_repo.expect_create().returning(|name| {
             Ok(User {
                 id: Uuid::new_v4(),
                 name,
             })
-        }
-        async fn find(&self, id: Uuid) -> anyhow::Result<Option<User>> {
+        });
+
+        mock_user_repo.expect_find().returning(|id| {
             Ok(Some(User {
                 id,
                 name: "TestUser".into(),
             }))
-        }
-    }
+        });
 
-    #[tokio::test]
-    async fn service_register_and_get() {
-        let repo = Arc::new(DummyRepo);
+        let repo = Arc::new(mock_user_repo);
         let service = UserService::new(repo.clone());
         let name = "Bob".to_string();
         let user = service.register(name.clone()).await.unwrap();

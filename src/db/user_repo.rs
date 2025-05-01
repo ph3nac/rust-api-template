@@ -4,6 +4,7 @@ use uuid::Uuid;
 
 use crate::models::user::User;
 
+#[mockall::automock]
 #[async_trait]
 pub trait UserRepo: Send + Sync + 'static {
     async fn create(&self, name: String) -> anyhow::Result<User>;
