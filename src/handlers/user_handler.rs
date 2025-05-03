@@ -41,7 +41,7 @@ async fn get_user(
 pub fn router() -> Router<AppState> {
     Router::new()
         .route("/", post(register))
-        .route("/:id", get(get_user))
+        .route("/{id}", get(get_user))
 }
 
 #[cfg(test)]
