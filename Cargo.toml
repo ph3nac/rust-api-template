@@ -3,12 +3,25 @@ name = "rust-api-template"
 version = "0.0.1"
 edition = "2024"
 
-[dependencies]
+[[bin]]
+name = "app"
+path = "src/bin/app.rs"
+
+[workspace]
+members = ["handlers", "models", "services", "db", "configs", "states"]
+
+[workspace.dependencies]
+db = { path = "./db" }
+handlers = { path = "./handlers" }
+models = { path = "./models" }
+services = { path = "./services" }
+configs = { path = "./configs" }
+states = { path = "./states" }
 anyhow = "1.0.98"
 async-trait = "0.1.88"
 axum = { version = "0.8.3", features = ["macros"] }
 dotenv = "0.15.0"
-serde = "1.0.219"
+serde = { version = "1.0.219", features = ['derive'] }
 serde_json = "1.0.140"
 sqlx = { version = "0.8.5", features = [
     "runtime-tokio",
@@ -24,3 +37,17 @@ tracing = "0.1.41"
 tracing-subscriber = "0.3.19"
 uuid = { version = "1.16.0", features = ["v4", "serde"] }
 mockall = "0.13.1"
+
+[dependencies]
+anyhow.workspace = true
+axum.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+db.workspace = true
+handlers.workspace = true
+models.workspace = true
+services.workspace = true
+configs.workspace = true
+states.workspace = true

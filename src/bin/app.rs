@@ -1,16 +1,10 @@
 use axum::Router;
-mod config;
-mod db;
-mod handlers;
-mod models;
-mod services;
-mod state;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let settings = config::load()?;
+    let settings = configs::load()?;
 
-    let state = state::AppState::new(&settings).await?;
+    let state = states::AppState::new(&settings).await?;
 
     let app = Router::new()
         .nest("/users", handlers::user_handler::router())

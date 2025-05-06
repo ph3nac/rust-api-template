@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
+use db::user_repo::UserRepo;
+use models::user::User;
 use uuid::Uuid;
-
-use crate::{db::user_repo::UserRepo, models::user::User};
 
 pub struct UserService {
     repo: Arc<dyn UserRepo>,
@@ -23,9 +23,9 @@ impl UserService {
 
 #[cfg(test)]
 mod tests {
-    use crate::db::user_repo::MockUserRepo;
 
     use super::*;
+    use db::user_repo::MockUserRepo;
     use uuid::Uuid;
 
     #[tokio::test]

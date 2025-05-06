@@ -1,0 +1,14 @@
+[package]
+name = "handlers"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum.workspace = true
+uuid.workspace = true
+serde.workspace = true
+services.workspace = true
+models.workspace = true
+db.workspace = true
+tokio.workspace = true
+states.workspace = true

@@ -1,8 +1,7 @@
 use async_trait::async_trait;
+use models::user::User;
 use sqlx::PgPool;
 use uuid::Uuid;
-
-use crate::models::user::User;
 
 #[mockall::automock]
 #[async_trait]

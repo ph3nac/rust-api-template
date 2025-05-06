@@ -4,10 +4,11 @@ use axum::{
     http::StatusCode,
     routing::{get, post},
 };
+use models::user::User;
 use serde::Deserialize;
+use services::user_service::UserService;
+use states::AppState;
 use uuid::Uuid;
-
-use crate::{models::user::User, services::user_service::UserService, state::AppState};
 
 #[derive(Deserialize)]
 struct RegisterPayload {
@@ -47,12 +48,12 @@ pub fn router() -> Router<AppState> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{db::user_repo::MockUserRepo, state::AppState};
     use axum::{
         Json,
         extract::{Path, State},
         http::StatusCode,
     };
+    use db::user_repo::MockUserRepo;
     use std::sync::Arc;
     use uuid::Uuid;
 
@@ -63,7 +64,7 @@ mod tests {
             .unwrap()
             .expect_create()
             .returning(|_| {
-                Ok(crate::models::user::User {
+                Ok(User {
                     id: uuid::Uuid::new_v4(),
                     name: "Test User".to_string(),
                 })
@@ -84,7 +85,7 @@ mod tests {
     #[tokio::test]
     async fn test_get_user_existing() {
         let mut user_repo = MockUserRepo::new();
-        let user = crate::models::user::User {
+        let user = User {
             id: uuid::Uuid::new_v4(),
             name: "Test User".into(),
         };

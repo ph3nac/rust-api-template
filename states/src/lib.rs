@@ -1,11 +1,8 @@
 use std::sync::Arc;
 
+use configs::Settings;
+use db::user_repo::{PgUserRepo, UserRepo};
 use sqlx::postgres::PgPoolOptions;
-
-use crate::{
-    config::Settings,
-    db::user_repo::{PgUserRepo, UserRepo},
-};
 
 #[derive(Clone)]
 pub struct AppState {

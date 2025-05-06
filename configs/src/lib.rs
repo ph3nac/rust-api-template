@@ -19,16 +19,14 @@ pub fn load() -> anyhow::Result<Settings> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::env;
 
     #[test]
     fn load_with_env() {
-        unsafe {
-            env::set_var("DATABASE_URL", "postgres://user:pass@localhost/db");
-            env::set_var("SERVER_ADDRESS", "0.0.0.0:8080");
-        }
         let cfg = load().unwrap();
-        assert_eq!(cfg.database_url, "postgres://user:pass@localhost/db");
-        assert_eq!(cfg.server_address, "0.0.0.0:8080");
+        assert_eq!(
+            cfg.database_url,
+            "postgres://postgres:password@localhost:5432/rust_api_template"
+        );
+        assert_eq!(cfg.server_address, "127.0.0.1:3000")
     }
 }
